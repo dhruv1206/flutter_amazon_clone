@@ -1,4 +1,5 @@
 import 'package:amazon_clone/features/auth/screens/auth_screen.dart';
+import 'package:amazon_clone/features/home/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
 Route<dynamic> generateRoutes(RouteSettings routeSettings) {
@@ -6,6 +7,10 @@ Route<dynamic> generateRoutes(RouteSettings routeSettings) {
     case AuthScreen.routeName:
       return MaterialPageRoute(
         builder: (context) => AuthScreen(),
+      );
+    case HomeScreen.routeName:
+      return MaterialPageRoute(
+        builder: (context) => HomeScreen(),
       );
     default:
       return MaterialPageRoute(

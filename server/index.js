@@ -15,6 +15,8 @@ app.use(authRouter);
 
 mongoose.connect(DB).then(() => {
   console.log("Connection successfull with MongoDB");
+}).catch((e)=>{
+  console.log(e);
 });
 
 app.listen(PORT, "0.0.0.0", () => {
