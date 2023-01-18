@@ -43,18 +43,20 @@ class AccountScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Column(
-        children: const [
-          BelowAppBar(),
-          SizedBox(
-            height: 10,
-          ),
-          TopButtons(),
-          SizedBox(
-            height: 20,
-          ),
-          Orders(),
-        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: const [
+            BelowAppBar(),
+            SizedBox(
+              height: 10,
+            ),
+            TopButtons(),
+            SizedBox(
+              height: 20,
+            ),
+            Orders(),
+          ],
+        ),
       ),
     );
   }

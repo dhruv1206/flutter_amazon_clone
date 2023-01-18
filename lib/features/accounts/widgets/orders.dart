@@ -35,6 +35,7 @@ class _OrdersState extends State<Orders> {
                   "See all",
                   style: TextStyle(
                     color: GlobalVariables.selectedNavBarColor,
+                    fontWeight: FontWeight.normal,
                   ),
                 ),
                 onPressed: () {},
@@ -44,17 +45,17 @@ class _OrdersState extends State<Orders> {
         ),
         //display orders
         Container(
-          height: 170,
+          height: 150,
           padding: const EdgeInsets.only(
             left: 10,
-            top: 20,
+            top: 10,
             right: 0,
           ),
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: 3,
             itemBuilder: (context, index) {
-              return SingleProduct(
+              return const SingleProduct(
                   image:
                       "https://images.unsplash.com/photo-1661961112951-f2bfd1f253ce?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxMXx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60");
             },
