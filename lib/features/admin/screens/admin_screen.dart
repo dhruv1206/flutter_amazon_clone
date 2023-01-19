@@ -1,25 +1,25 @@
-import 'package:amazon_clone/constants/global_variables.dart';
-import 'package:amazon_clone/features/accounts/screens/account_screen.dart';
-import 'package:amazon_clone/features/home/screens/home_screen.dart';
-import 'package:badges/badges.dart';
+import 'package:amazon_clone/features/admin/screens/posts_screen.dart';
 import "package:flutter/material.dart";
 
-class BottomBar extends StatefulWidget {
-  static const routeName = "/real-home";
-  const BottomBar({super.key});
+import '../../../constants/global_variables.dart';
+
+class AdminScreen extends StatefulWidget {
+  const AdminScreen({super.key});
 
   @override
-  State<BottomBar> createState() => _BottomBarState();
+  State<AdminScreen> createState() => _AdminScreenState();
 }
 
-class _BottomBarState extends State<BottomBar> {
+class _AdminScreenState extends State<AdminScreen> {
   var _page = 0;
   double bottomBarWidht = 42;
   double bottomBarBorderWidth = 5;
 
   List<Widget> pages = [
-    const HomeScreen(),
-    const AccountScreen(),
+    const PostsScreen(),
+    const Center(
+      child: Text("Analytics Page"),
+    ),
     const Center(
       child: Text("Accounts"),
     ),
@@ -28,11 +28,36 @@ class _BottomBarState extends State<BottomBar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: AnimatedSwitcher(
-        duration: const Duration(
-          milliseconds: 200,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(50),
+        child: AppBar(
+          flexibleSpace: Container(
+            decoration: const BoxDecoration(
+              gradient: GlobalVariables.appBarGradient,
+            ),
+          ),
+          title: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Image.asset(
+                "assets/images/amazon_in.png",
+                width: 120,
+                height: 45,
+              ),
+              const Spacer(),
+              const Text(
+                "Admin",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(
+                width: 15,
+              )
+            ],
+          ),
         ),
-        child: pages[_page],
       ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: (value) => setState(() {
@@ -93,7 +118,7 @@ class _BottomBarState extends State<BottomBar> {
                   duration: const Duration(milliseconds: 150),
                   width: bottomBarWidht,
                   child: const Icon(
-                    Icons.person_outline_outlined,
+                    Icons.analytics_outlined,
                   ),
                 ),
               ],
@@ -121,7 +146,7 @@ class _BottomBarState extends State<BottomBar> {
                   duration: const Duration(milliseconds: 150),
                   width: bottomBarWidht,
                   child: const Icon(
-                    Icons.shopping_cart_outlined,
+                    Icons.all_inbox_outlined,
                   ),
                 ),
               ],
@@ -130,6 +155,7 @@ class _BottomBarState extends State<BottomBar> {
           ),
         ],
       ),
+      body: pages[_page],
     );
   }
 }

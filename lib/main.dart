@@ -1,5 +1,6 @@
 import 'package:amazon_clone/common/widgets/bottom_bar.dart';
 import 'package:amazon_clone/constants/global_variables.dart';
+import 'package:amazon_clone/features/admin/screens/admin_screen.dart';
 import 'package:amazon_clone/features/auth/screens/auth_screen.dart';
 import 'package:amazon_clone/features/auth/services/auth_service.dart';
 import 'package:amazon_clone/features/home/screens/home_screen.dart';
@@ -43,6 +44,7 @@ class _MyAppState extends State<MyApp> {
       onGenerateRoute: (settings) => generateRoutes(settings),
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        useMaterial3: true,
         scaffoldBackgroundColor: GlobalVariables.backgroundColor,
         colorScheme: const ColorScheme.light(
           primary: GlobalVariables.secondaryColor,
@@ -55,7 +57,9 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
       home: Provider.of<UserProvider>(context).user.token.isNotEmpty
-          ? BottomBar()
+          ? Provider.of<UserProvider>(context).user.type == "user"
+              ? BottomBar()
+              : AdminScreen()
           : AuthScreen(),
     );
   }
