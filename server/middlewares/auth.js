@@ -5,7 +5,7 @@ const auth = async (req, res, next)=>{
         const token = req.header("x-auth-token");
         if(!token) res.status(401).json({msg:"No auth token found, access denied."})
         const verified = jwt.verify(token, "passwordKey")
-        if(!verified)res.status(401).json({msg:"Unabkle to verify token, authorization failed!"})
+        if(!verified)res.status(401).json({msg:"Unable to verify token, authorization failed!"})
 
         req.user = verified.id;
         req.token = token;

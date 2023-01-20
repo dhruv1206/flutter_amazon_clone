@@ -1,6 +1,7 @@
 // IMPORTS FROM PACKAGES
 const express = require("express");
 const mongoose = require("mongoose");
+const adminRouter = require("./routes/admin");
 // IMPORTS FROM OTHER FILES
 const authRouter = require("./routes/auth");
 
@@ -12,6 +13,7 @@ const DB = "mongodb+srv://dhruv1206:dhruv_1206@cluster0.lhwdagb.mongodb.net/?ret
 // middleware
 app.use(express.json());
 app.use(authRouter);
+app.use(adminRouter);
 
 mongoose.connect(DB).then(() => {
   console.log("Connection successfull with MongoDB");

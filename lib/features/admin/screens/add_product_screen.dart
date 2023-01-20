@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:amazon_clone/common/widgets/custom_button.dart';
 import 'package:amazon_clone/common/widgets/custom_textfield.dart';
 import 'package:amazon_clone/constants/utils.dart';
+import 'package:amazon_clone/features/admin/services/admin_services.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dotted_border/dotted_border.dart';
 import "package:flutter/material.dart";
@@ -22,9 +23,23 @@ class _AddProductScreenState extends State<AddProductScreen> {
   final descriptionController = TextEditingController();
   final priceController = TextEditingController();
   final quantityController = TextEditingController();
-
+  final adminServices = AdminServices();
+  final _addProductFormKey = GlobalKey<FormState>();
   String category = "Mobiles";
   List<File> images = [];
+
+  void sellProduct() {
+    if (_addProductFormKey.currentState!.validate() && images.isNotEmpty) {
+      adminServices.sellProduct(
+          context: context,
+          name: productNameController.text,
+          description: descriptionController.text,
+          price: double.parse(priceController.text),
+          quantity: double.parse(quantityController.text),
+          category: category,
+          images: images);
+    }
+  }
 
   @override
   void dispose() {
@@ -71,6 +86,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
       ),
       body: SingleChildScrollView(
         child: Form(
+          key: _addProductFormKey,
           child: Padding(
             padding: const EdgeInsets.symmetric(
               horizontal: 10,
@@ -90,10 +106,10 @@ class _AddProductScreenState extends State<AddProductScreen> {
                           );
                         }).toList(),
                         options: CarouselOptions(
-                          viewportFraction: 1,
-                          height: 200,
-                          autoPlay: true,
-                        ),
+                            viewportFraction: 1,
+                            height: 200,
+                            autoPlay: true,
+                            enableInfiniteScroll: false),
                       )
                     : GestureDetector(
                         onTap: selectImages,
@@ -185,7 +201,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
                 ),
                 CustomButton(
                   text: "Sell",
-                  onTap: () {},
+                  onTap: sellProduct,
                 ),
                 const SizedBox(
                   height: 20,
