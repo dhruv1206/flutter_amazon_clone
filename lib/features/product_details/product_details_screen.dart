@@ -1,21 +1,27 @@
-import 'package:amazon_clone/features/home/widgets/address_box.dart';
-import 'package:amazon_clone/features/home/widgets/carousel_image.dart';
-import 'package:amazon_clone/features/home/widgets/deal_of_day.dart';
-import 'package:amazon_clone/features/home/widgets/top_categories.dart';
-import 'package:amazon_clone/features/search/screens/search_screen.dart';
-import 'package:flutter/material.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:amazon_clone/common/widgets/starts.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import "package:flutter/material.dart";
 import 'package:flutter/services.dart';
-import '../../../constants/global_variables.dart';
 
-class HomeScreen extends StatefulWidget {
-  static const String routeName = "/home-screen";
-  const HomeScreen({super.key});
+import 'package:amazon_clone/models/products.dart';
+
+import '../../constants/global_variables.dart';
+import '../search/screens/search_screen.dart';
+
+class ProductDetailsScreen extends StatefulWidget {
+  static const routeName = "/product-details-screen";
+  final Product product;
+  const ProductDetailsScreen({
+    Key? key,
+    required this.product,
+  }) : super(key: key);
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,17 +112,51 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: SingleChildScrollView(
         child: Column(
-          children: const [
-            AddressBox(),
-            SizedBox(
-              height: 10,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "${widget.product.id}",
+                  ),
+                  const Stars(rating: 4),
+                ],
+              ),
             ),
-            TopCategories(),
-            SizedBox(
-              height: 10,
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                vertical: 20,
+                horizontal: 10,
+              ),
+              child: Text(
+                widget.product.name,
+                style: const TextStyle(
+                  fontSize: 15,
+                ),
+              ),
             ),
-            CarouselImage(),
-            DealOfDay(),
+            CarouselSlider(
+              items: widget.product.images.map((e) {
+                return Image.network(
+                  e,
+                  fit: BoxFit.cover,
+                  height: 200,
+                );
+              }).toList(),
+              options: CarouselOptions(
+                  viewportFraction: 1,
+                  height: 300,
+                  autoPlay: false,
+                  enableInfiniteScroll: false),
+            ),
+            Container(
+              color: Colors.black12,
+              height: 5,
+            ),
+            
           ],
         ),
       ),
