@@ -64,41 +64,41 @@ class AuthService {
     required String password,
     required BuildContext context,
   }) async {
-    try {
-      var response = await http.post(
-        Uri.parse("$uri/api/signin"),
-        body: jsonEncode({
-          "email": email,
-          "password": password,
-        }),
-        headers: <String, String>{
-          "Content-Type": "application/json; charset=UTF-8",
-        },
-      );
+    // try {
+    var response = await http.post(
+      Uri.parse("$uri/api/signin"),
+      body: jsonEncode({
+        "email": email,
+        "password": password,
+      }),
+      headers: <String, String>{
+        "Content-Type": "application/json; charset=UTF-8",
+      },
+    );
 
-      ErrorHandling(
-        response: response,
-        context: context,
-        onSuccess: () async {
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          Provider.of<UserProvider>(context, listen: false)
-              .setUser(response.body);
-          await prefs.setString(
-              "x-auth-token", jsonDecode(response.body)["token"]);
-          showSnackBar(context: context, message: "Logged In Successfully.");
-          Navigator.pushNamedAndRemoveUntil(
-              context, BottomBar.routeName, (route) => false);
-        },
-      );
+    ErrorHandling(
+      response: response,
+      context: context,
+      onSuccess: () async {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        Provider.of<UserProvider>(context, listen: false)
+            .setUser(response.body);
+        await prefs.setString(
+            "x-auth-token", jsonDecode(response.body)["token"]);
+        showSnackBar(context: context, message: "Logged In Successfully.");
+        Navigator.pushNamedAndRemoveUntil(
+            context, BottomBar.routeName, (route) => false);
+      },
+    );
 
-      if (kDebugMode) {
-        print(response);
-      }
-    } catch (e) {
-      if (kDebugMode) {
-        showSnackBar(context: context, message: e.toString());
-      }
+    if (kDebugMode) {
+      print(response);
     }
+    // } catch (e) {
+    //   if (kDebugMode) {
+    //     showSnackBar(context: context, message: "LOGIN $e");
+    //   }
+    // }
   }
 
   void getUserData({

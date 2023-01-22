@@ -5,7 +5,7 @@ import 'package:amazon_clone/features/accounts/widgets/top_buttons.dart';
 import "package:flutter/material.dart";
 
 class AccountScreen extends StatelessWidget {
-  const AccountScreen({super.key});
+  const AccountScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,44 +19,43 @@ class AccountScreen extends StatelessWidget {
             ),
           ),
           title: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Image.asset(
-                "assets/images/amazon_in.png",
-                width: 120,
-                height: 45,
+              Container(
+                alignment: Alignment.topLeft,
+                child: Image.asset(
+                  'assets/images/amazon_in.png',
+                  width: 120,
+                  height: 45,
+                  color: Colors.black,
+                ),
               ),
-              const Spacer(),
-              Row(
-                children: const [
-                  Padding(
-                    padding: EdgeInsets.only(right: 16.0),
-                    child: Icon(Icons.notifications_outlined),
-                  ),
-                  Icon(Icons.search),
-                ],
-              ),
-              const SizedBox(
-                width: 15,
+              Container(
+                padding: const EdgeInsets.only(left: 15, right: 15),
+                child: Row(
+                  children: const [
+                    Padding(
+                      padding: EdgeInsets.only(right: 15),
+                      child: Icon(Icons.notifications_outlined),
+                    ),
+                    Icon(
+                      Icons.search,
+                    ),
+                  ],
+                ),
               )
             ],
           ),
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: const [
-            BelowAppBar(),
-            SizedBox(
-              height: 10,
-            ),
-            TopButtons(),
-            SizedBox(
-              height: 20,
-            ),
-            Orders(),
-          ],
-        ),
+      body: Column(
+        children: const [
+          BelowAppBar(),
+          SizedBox(height: 10),
+          TopButtons(),
+          SizedBox(height: 20),
+          Orders(),
+        ],
       ),
     );
   }

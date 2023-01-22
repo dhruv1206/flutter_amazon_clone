@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:amazon_clone/constants/error_handling.dart';
@@ -67,6 +68,7 @@ class AdminServices {
 
   Future<List<Product>> fetchAllProducts(BuildContext context) async {
     final userProvider = Provider.of<UserProvider>(context, listen: false);
+    print(userProvider.user.token);
     List<Product> poroductList = [];
     try {
       var response = await http.get(
@@ -95,5 +97,39 @@ class AdminServices {
       showSnackBar(context: context, message: e.toString());
     }
     return poroductList;
+  }
+
+  Future<void> deleteProduct(
+      BuildContext context, String id, VoidCallback onSuccess) async {
+    try {
+      print("ID " + id);
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+      final cloudinary = CloudinaryPublic("ddntiiwli", "fsb4qrnt", cache: true);
+
+      var response = await http.post(
+        Uri.parse("$uri/admin/delete-product"),
+        headers: <String, String>{
+          "Content-Type": "application/json; charset=UTF-8",
+          "x-auth-token": userProvider.user.token,
+        },
+        body: jsonEncode({"id": id}),
+      );
+      ErrorHandling(
+        response: response,
+        context: context,
+        onSuccess: () {
+          showSnackBar(
+            context: context,
+            message: "Product deleted successfeully",
+          );
+          onSuccess();
+        },
+      );
+      print(response.body);
+    } catch (e) {
+      print(e);
+      showSnackBar(context: context, message: e.toString());
+    }
   }
 }

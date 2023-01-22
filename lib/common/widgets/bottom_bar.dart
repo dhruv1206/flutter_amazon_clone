@@ -35,6 +35,8 @@ class _BottomBarState extends State<BottomBar> {
         child: pages[_page],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        selectedFontSize: 0,
+        unselectedFontSize: 0,
         onTap: (value) => setState(() {
           _page = value;
         }),

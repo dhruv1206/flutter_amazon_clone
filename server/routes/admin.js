@@ -1,4 +1,3 @@
-const e = require("express");
 const express = require("express");
 const admin = require("../middlewares/admin");
 const Product = require("../models/product");
@@ -32,4 +31,21 @@ adminRouter.get("/admin/get-products", admin,async(req, res)=>{
         res.status(500).json({error:err.message})
     }
 });
+
+adminRouter.post("/admin/delete-product", admin, async(req, res) => {
+    try {
+        const {id} = req.body;
+        if(!id){
+            return res.status(400).json({msg:"No product id specified"})
+        }
+        const product = await Product.findByIdAndDelete(id);
+        if(!product){
+            return res.status(400).json({msg:"Product not found"});
+        }
+        res.json({msg:"Succesfully deleted the product"});
+    } catch (err) {
+        res.status(500).json({error:err.message});
+    }
+});
+
 module.exports = adminRouter;
