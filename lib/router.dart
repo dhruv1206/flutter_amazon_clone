@@ -1,4 +1,5 @@
 import 'package:amazon_clone/common/widgets/bottom_bar.dart';
+import 'package:amazon_clone/features/address/screens/address_screen.dart';
 import 'package:amazon_clone/features/admin/screens/add_product_screen.dart';
 import 'package:amazon_clone/features/admin/screens/admin_screen.dart';
 import 'package:amazon_clone/features/auth/screens/auth_screen.dart';
@@ -11,9 +12,16 @@ import 'package:flutter/material.dart';
 
 Route<dynamic> generateRoutes(RouteSettings routeSettings) {
   switch (routeSettings.name) {
+    case AddressScreen.routeName:
+      var totalAmount = routeSettings.arguments as String;
+      return MaterialPageRoute(
+        builder: (context) => AddressScreen(
+          totalAmount: totalAmount,
+        ),
+      );
     case AdminScreen.routeName:
       return MaterialPageRoute(
-        builder: (context) => AdminScreen(),
+        builder: (context) => const AdminScreen(),
       );
     case ProductDetailsScreen.routeName:
       var product = routeSettings.arguments as Product;
@@ -34,19 +42,19 @@ Route<dynamic> generateRoutes(RouteSettings routeSettings) {
       );
     case AuthScreen.routeName:
       return MaterialPageRoute(
-        builder: (context) => AuthScreen(),
+        builder: (context) => const AuthScreen(),
       );
     case HomeScreen.routeName:
       return MaterialPageRoute(
-        builder: (context) => HomeScreen(),
+        builder: (context) => const HomeScreen(),
       );
     case BottomBar.routeName:
       return MaterialPageRoute(
-        builder: (context) => BottomBar(),
+        builder: (context) => const BottomBar(),
       );
     case AddProductScreen.routeName:
       return MaterialPageRoute(
-        builder: (context) => AddProductScreen(),
+        builder: (context) => const AddProductScreen(),
       );
     default:
       return MaterialPageRoute(

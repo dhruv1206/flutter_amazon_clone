@@ -22,17 +22,17 @@ class AccountButton extends StatelessWidget {
         ),
         child: OutlinedButton(
           onPressed: onPress,
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.black12.withOpacity(0.03),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(50),
+            ),
+          ),
           child: Text(
             text,
             style: const TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.normal,
-            ),
-          ),
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.black12.withOpacity(0.03),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(50),
             ),
           ),
         ),

@@ -87,7 +87,7 @@ class _DealOfDayState extends State<DealOfDay> {
                       ),
                     ),
                     SizedBox(
-                      height: 100,
+                      height: product!.images.length == 1 ? 0 : 100,
                       width: size.width,
                       child: GestureDetector(
                         onTap: () => Navigator.of(context).pushNamed(
@@ -96,12 +96,14 @@ class _DealOfDayState extends State<DealOfDay> {
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           itemCount: product!.images.length,
-                          itemBuilder: (context, index) => CachedNetworkImage(
-                            imageUrl: product!.images[index],
-                            fit: BoxFit.fitWidth,
-                            width: 100,
-                            height: 100,
-                          ),
+                          itemBuilder: (context, index) => (index != 0)
+                              ? CachedNetworkImage(
+                                  imageUrl: product!.images[index],
+                                  fit: BoxFit.fitWidth,
+                                  width: 100,
+                                  height: 100,
+                                )
+                              : const SizedBox(),
                         ),
                       ),
                     ),

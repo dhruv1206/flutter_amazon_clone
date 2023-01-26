@@ -1,7 +1,6 @@
 import 'package:amazon_clone/constants/global_variables.dart';
 import 'package:amazon_clone/features/accounts/widgets/single_product.dart';
 import "package:flutter/material.dart";
-import 'package:flutter/rendering.dart';
 
 class Orders extends StatefulWidget {
   const Orders({super.key});

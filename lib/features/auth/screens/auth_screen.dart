@@ -91,7 +91,7 @@ class _AuthScreenState extends State<AuthScreen> {
                 ),
               ),
               AnimatedSwitcher(
-                duration: Duration(milliseconds: 300),
+                duration: const Duration(milliseconds: 300),
                 child: authEnum == Auth.signup
                     ? Container(
                         padding: const EdgeInsets.all(8),

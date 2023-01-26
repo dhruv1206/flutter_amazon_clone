@@ -78,7 +78,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
           ),
           title: const Text(
             "Add Product",
-            style: const TextStyle(
+            style: TextStyle(
               color: Colors.black,
             ),
           ),

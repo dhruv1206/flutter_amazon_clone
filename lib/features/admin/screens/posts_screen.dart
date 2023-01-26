@@ -24,7 +24,6 @@ class _PostsScreenState extends State<PostsScreen> {
   fetchAllProducts() async {
     products = await adminServices.fetchAllProducts(context);
     setState(() {});
-    print(products);
   }
 
   void deleteProduct(String id, int index) {
@@ -76,7 +75,6 @@ class _PostsScreenState extends State<PostsScreen> {
               },
             ),
             floatingActionButton: FloatingActionButton(
-              child: const Icon(Icons.add),
               onPressed: () {
                 Navigator.of(context).pushNamed(
                   AddProductScreen.routeName,
@@ -84,6 +82,7 @@ class _PostsScreenState extends State<PostsScreen> {
               },
               tooltip: "Add a product",
               shape: const CircleBorder(),
+              child: const Icon(Icons.add),
             ),
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.centerFloat,

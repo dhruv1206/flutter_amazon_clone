@@ -27,7 +27,7 @@ class _AddressBoxState extends State<AddressBox> {
       padding: const EdgeInsets.only(left: 10),
       child: Row(
         children: [
-          Icon(
+          const Icon(
             Icons.location_on_outlined,
             size: 20,
           ),
@@ -38,7 +38,7 @@ class _AddressBoxState extends State<AddressBox> {
               ),
               child: Text(
                 "Delivery to ${user.name} - ${user.address}",
-                style: TextStyle(
+                style: const TextStyle(
                   fontWeight: FontWeight.w500,
                 ),
                 overflow: TextOverflow.ellipsis,

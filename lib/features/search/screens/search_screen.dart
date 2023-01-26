@@ -7,10 +7,8 @@ import 'package:amazon_clone/features/search/widgets/searched_product.dart';
 import 'package:amazon_clone/models/products.dart';
 import "package:flutter/material.dart";
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 
 import '../../../constants/global_variables.dart';
-import '../../../providers/user_provider.dart';
 
 class SearchScreen extends StatefulWidget {
   static const routeName = "/search-screen";
