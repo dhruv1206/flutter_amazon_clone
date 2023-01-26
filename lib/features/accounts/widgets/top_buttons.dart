@@ -1,5 +1,7 @@
 import 'package:amazon_clone/features/accounts/widgets/account_button.dart';
+import 'package:amazon_clone/features/auth/screens/auth_screen.dart';
 import "package:flutter/material.dart";
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TopButtons extends StatefulWidget {
   const TopButtons({super.key});
@@ -32,7 +34,14 @@ class _TopButtonsState extends State<TopButtons> {
           children: [
             AccountButton(
               text: "Log Out",
-              onPress: () {},
+              onPress: () async {
+                SharedPreferences sp = await SharedPreferences.getInstance();
+                sp.clear();
+                Navigator.pushNamed(
+                  context,
+                  AuthScreen.routeName,
+                );
+              },
             ),
             AccountButton(
               text: "Your Wishlist",

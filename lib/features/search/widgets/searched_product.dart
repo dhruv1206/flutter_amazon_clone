@@ -1,14 +1,17 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:amazon_clone/common/widgets/starts.dart';
 import "package:flutter/material.dart";
+
+import 'package:amazon_clone/common/widgets/starts.dart';
 
 import '../../../models/products.dart';
 
 class SearchedProduct extends StatelessWidget {
   final Product product;
+  final double rating;
   const SearchedProduct({
     Key? key,
     required this.product,
+    required this.rating,
   }) : super(key: key);
 
   @override
@@ -34,6 +37,7 @@ class SearchedProduct extends StatelessWidget {
                   product.name,
                   style: const TextStyle(
                     fontSize: 16,
+                    fontWeight: FontWeight.normal,
                   ),
                   maxLines: 2,
                 ),
@@ -41,7 +45,7 @@ class SearchedProduct extends StatelessWidget {
               Container(
                 width: 235,
                 padding: const EdgeInsets.only(left: 10, top: 5),
-                child: const Stars(rating: 4),
+                child: Stars(rating: rating),
               ),
               Container(
                 width: 235,

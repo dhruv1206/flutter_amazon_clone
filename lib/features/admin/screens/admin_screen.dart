@@ -1,9 +1,12 @@
 import 'package:amazon_clone/features/admin/screens/posts_screen.dart';
 import "package:flutter/material.dart";
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../constants/global_variables.dart';
+import '../../auth/screens/auth_screen.dart';
 
 class AdminScreen extends StatefulWidget {
+  static const String routeName = "/admin-screen";
   const AdminScreen({super.key});
 
   @override
@@ -155,7 +158,17 @@ class _AdminScreenState extends State<AdminScreen> {
           ),
         ],
       ),
-      body: pages[_page],
+      body: GestureDetector(
+        onDoubleTap: _page != 2
+            ? () {}
+            : () async {
+                final sp = await SharedPreferences.getInstance();
+                sp.clear();
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    AuthScreen.routeName, (route) => false);
+              },
+        child: pages[_page],
+      ),
     );
   }
 }

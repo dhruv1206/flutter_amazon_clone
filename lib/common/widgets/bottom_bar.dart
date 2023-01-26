@@ -1,8 +1,11 @@
 import 'package:amazon_clone/constants/global_variables.dart';
 import 'package:amazon_clone/features/accounts/screens/account_screen.dart';
+import 'package:amazon_clone/features/cart/screens/cart_screen.dart';
 import 'package:amazon_clone/features/home/screens/home_screen.dart';
+import 'package:amazon_clone/providers/user_provider.dart';
 import 'package:badges/badges.dart';
 import "package:flutter/material.dart";
+import 'package:provider/provider.dart';
 
 class BottomBar extends StatefulWidget {
   static const routeName = "/real-home";
@@ -20,13 +23,12 @@ class _BottomBarState extends State<BottomBar> {
   List<Widget> pages = [
     const HomeScreen(),
     const AccountScreen(),
-    const Center(
-      child: Text("Accounts"),
-    ),
+    const CartScreen(),
   ];
 
   @override
   Widget build(BuildContext context) {
+    final userCartLength = context.watch<UserProvider>().user.cart.length;
     return Scaffold(
       body: AnimatedSwitcher(
         duration: const Duration(
@@ -122,8 +124,14 @@ class _BottomBarState extends State<BottomBar> {
                 AnimatedContainer(
                   duration: const Duration(milliseconds: 150),
                   width: bottomBarWidht,
-                  child: const Icon(
-                    Icons.shopping_cart_outlined,
+                  child: Badge(
+                    elevation: 0,
+                    showBadge: userCartLength != 0,
+                    badgeContent: Text(userCartLength.toString()),
+                    badgeColor: Colors.white,
+                    child: const Icon(
+                      Icons.shopping_cart_outlined,
+                    ),
                   ),
                 ),
               ],

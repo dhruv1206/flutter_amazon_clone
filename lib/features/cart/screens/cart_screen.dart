@@ -1,48 +1,27 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:amazon_clone/common/widgets/loader.dart';
+import 'package:amazon_clone/common/widgets/custom_button.dart';
+import 'package:amazon_clone/features/cart/widgets/cart_product.dart';
+import 'package:amazon_clone/features/cart/widgets/cart_subtotal.dart';
 import 'package:amazon_clone/features/home/widgets/address_box.dart';
-import 'package:amazon_clone/features/product_details/screens/product_details_screen.dart';
-import 'package:amazon_clone/features/search/services/search_sevices.dart';
-import 'package:amazon_clone/features/search/widgets/searched_product.dart';
-import 'package:amazon_clone/models/products.dart';
 import "package:flutter/material.dart";
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 import '../../../constants/global_variables.dart';
 import '../../../providers/user_provider.dart';
+import '../../search/screens/search_screen.dart';
 
-class SearchScreen extends StatefulWidget {
-  static const routeName = "/search-screen";
-  final String searchQuery;
-  const SearchScreen({
-    Key? key,
-    required this.searchQuery,
-  }) : super(key: key);
+class CartScreen extends StatefulWidget {
+  const CartScreen({super.key});
 
   @override
-  State<SearchScreen> createState() => _SearchScreenState();
+  State<CartScreen> createState() => _CartScreenState();
 }
 
-class _SearchScreenState extends State<SearchScreen> {
-  List<Product>? products;
-  final searchServices = SearchServices();
-  @override
-  void initState() {
-    super.initState();
-    searchProducts();
-  }
-
-  Future<void> searchProducts() async {
-    products = await searchServices.fetchSearchedProducts(
-      context: context,
-      searchQuery: widget.searchQuery,
-    );
-    setState(() {});
-  }
-
+class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context).user;
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
@@ -130,47 +109,39 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
         ),
       ),
-      body: products == null
-          ? const Loader()
-          : Column(
-              children: [
-                const AddressBox(),
-                const SizedBox(
-                  height: 10,
-                ),
-                Expanded(
-                  child: ListView.separated(
-                    separatorBuilder: (context, index) {
-                      return const SizedBox(
-                        height: 10,
-                      );
-                    },
-                    itemCount: products!.length,
-                    itemBuilder: (context, index) {
-                      double totalRating = 0;
-                      double avgRating = 0;
-                      for (var i in products![index].rating!) {
-                        totalRating += i.rating;
-                      }
-                      if (totalRating != 0) {
-                        avgRating =
-                            totalRating / products![index].rating!.length;
-                      }
-                      return GestureDetector(
-                        onTap: () => Navigator.of(context).pushNamed(
-                          ProductDetailsScreen.routeName,
-                          arguments: products![index],
-                        ),
-                        child: SearchedProduct(
-                          product: products![index],
-                          rating: avgRating,
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const AddressBox(),
+            const CartSubtotal(),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: CustomButton(
+                text: "Proceed to Buy (${user.cart.length} items)",
+                onTap: () {},
+                color: Colors.yellow[600],
+              ),
             ),
+            const SizedBox(
+              height: 15,
+            ),
+            Container(
+              color: Colors.black12.withOpacity(0.08),
+              height: 1,
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            ListView.builder(
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return CartProduct(index: index);
+              },
+              itemCount: user.cart.length,
+            )
+          ],
+        ),
+      ),
     );
   }
 }

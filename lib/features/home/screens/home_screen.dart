@@ -45,7 +45,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             arguments: value);
                       },
                       inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.allow(RegExp("[0-9a-zA-Z]"))
+                        FilteringTextInputFormatter.allow(
+                            RegExp("[0-9a-zA-Z_ ]"))
                       ],
                       decoration: InputDecoration(
                         hintText: "Search Amazon.in",
