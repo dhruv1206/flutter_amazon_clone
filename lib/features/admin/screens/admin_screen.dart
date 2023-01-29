@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:amazon_clone/features/admin/screens/order_screen.dart';
 import 'package:amazon_clone/features/admin/screens/posts_screen.dart';
 import "package:flutter/material.dart";
 import 'package:shared_preferences/shared_preferences.dart';
@@ -26,7 +27,7 @@ class _AdminScreenState extends State<AdminScreen> {
       child: Text("Analytics Page"),
     ),
     const Center(
-      child: Text("Accounts"),
+      child: OrderScreen(),
     ),
   ];
 
@@ -161,7 +162,7 @@ class _AdminScreenState extends State<AdminScreen> {
         ],
       ),
       body: GestureDetector(
-        onDoubleTap: _page != 2
+        onLongPress: _page != 2
             ? () {}
             : () async {
                 final sp = await SharedPreferences.getInstance();

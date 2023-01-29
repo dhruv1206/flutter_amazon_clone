@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:amazon_clone/constants/error_handling.dart';
 import 'package:amazon_clone/constants/global_variables.dart';
 import 'package:amazon_clone/constants/utils.dart';
+import 'package:amazon_clone/models/order.dart';
 import 'package:amazon_clone/models/products.dart';
 import 'package:amazon_clone/providers/user_provider.dart';
 import 'package:cloudinary_public/cloudinary_public.dart';
@@ -117,6 +118,70 @@ class AdminServices {
             context: context,
             message: "Product deleted successfeully",
           );
+          onSuccess();
+        },
+      );
+    } catch (e) {
+      showSnackBar(context: context, message: e.toString());
+    }
+  }
+
+  Future<List<Order>> fetchAllOrders(BuildContext context) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    List<Order> ordersList = [];
+    try {
+      var response = await http.get(
+        Uri.parse("$uri/admin/get-orders"),
+        headers: {
+          "Content-Type": "application/json; charset=UTF-8",
+          "x-auth-token": userProvider.user.token,
+        },
+      );
+      ErrorHandling(
+        response: response,
+        context: context,
+        onSuccess: () {
+          for (int i = 0; i < jsonDecode(response.body).length; i++) {
+            ordersList.add(
+              Order.fromJson(
+                jsonEncode(
+                  jsonDecode(response.body)[i],
+                ),
+              ),
+            );
+          }
+        },
+      );
+    } catch (e) {
+      showSnackBar(context: context, message: e.toString());
+    }
+    return ordersList;
+  }
+
+  Future<void> changeOrderStatus(
+    BuildContext context,
+    int status,
+    Order order,
+    VoidCallback onSuccess,
+  ) async {
+    try {
+      final userProvider = Provider.of<UserProvider>(context, listen: false);
+
+      var response = await http.post(
+        Uri.parse("$uri/admin/change-order-status"),
+        headers: <String, String>{
+          "Content-Type": "application/json; charset=UTF-8",
+          "x-auth-token": userProvider.user.token,
+        },
+        body: jsonEncode({
+          "id": order.id,
+          "status": status,
+        }),
+      );
+      ErrorHandling(
+        response: response,
+        context: context,
+        onSuccess: () {
           onSuccess();
         },
       );

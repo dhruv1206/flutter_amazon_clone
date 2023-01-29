@@ -1,11 +1,15 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:amazon_clone/common/widgets/custom_button.dart';
+import 'package:amazon_clone/features/admin/services/admin_services.dart';
 import 'package:amazon_clone/features/product_details/screens/product_details_screen.dart';
+import 'package:amazon_clone/providers/user_provider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import "package:flutter/material.dart";
 
 import 'package:amazon_clone/models/order.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import '../../../constants/global_variables.dart';
 import '../../search/screens/search_screen.dart';
@@ -23,6 +27,8 @@ class OrderDetailScreen extends StatefulWidget {
 }
 
 class _OrderDetailScreenState extends State<OrderDetailScreen> {
+  final adminServices = AdminServices();
+
   int currentStep = 0;
   @override
   void initState() {
@@ -30,8 +36,18 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
     currentStep = widget.order.status;
   }
 
+  //ONLY ADMIN CAN ACCESS
+  void changeOrderStatus(int status) async {
+    adminServices.changeOrderStatus(context, status + 1, widget.order, () {
+      setState(() {
+        currentStep += 1;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<UserProvider>(context).user;
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(60),
@@ -235,6 +251,16 @@ class _OrderDetailScreenState extends State<OrderDetailScreen> {
                 ),
                 child: Stepper(
                   controlsBuilder: (context, details) {
+                    if (user.type == "admin") {
+                      return SizedBox(
+                        width: 100,
+                        height: 40,
+                        child: CustomButton(
+                          text: "Done",
+                          onTap: () => changeOrderStatus(currentStep + 1),
+                        ),
+                      );
+                    }
                     return const SizedBox();
                   },
                   currentStep: currentStep,
