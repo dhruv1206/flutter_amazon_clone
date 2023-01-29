@@ -118,7 +118,7 @@ class _DealOfDayState extends State<DealOfDay> {
                         "See all deals",
                         style: TextStyle(color: Colors.cyan.shade800),
                       ),
-                    )
+                    ),
                   ],
                 ),
               );

@@ -3,7 +3,6 @@ import 'package:amazon_clone/features/accounts/screens/account_screen.dart';
 import 'package:amazon_clone/features/cart/screens/cart_screen.dart';
 import 'package:amazon_clone/features/home/screens/home_screen.dart';
 import 'package:amazon_clone/providers/user_provider.dart';
-import 'package:badges/badges.dart';
 import "package:flutter/material.dart";
 import 'package:provider/provider.dart';
 
@@ -125,10 +124,14 @@ class _BottomBarState extends State<BottomBar> {
                   duration: const Duration(milliseconds: 150),
                   width: bottomBarWidht,
                   child: Badge(
-                    elevation: 0,
-                    showBadge: userCartLength != 0,
-                    badgeContent: Text(userCartLength.toString()),
-                    badgeColor: Colors.white,
+                    // elevation: 0,
+                    // showBadge: userCartLength != 0,
+                    // badgeContent: Text(userCartLength.toString()),
+                    // badgeColor: Colors.white,
+                    backgroundColor: Colors.white,
+                    label: Text(
+                      userCartLength.toString(),
+                    ),
                     child: const Icon(
                       Icons.shopping_cart_outlined,
                     ),
