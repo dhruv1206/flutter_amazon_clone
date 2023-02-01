@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:amazon_clone/constants/error_handling.dart';
 import 'package:amazon_clone/constants/global_variables.dart';
 import 'package:amazon_clone/constants/utils.dart';
+import 'package:amazon_clone/features/admin/models/sales.dart';
 import 'package:amazon_clone/models/order.dart';
 import 'package:amazon_clone/models/products.dart';
 import 'package:amazon_clone/providers/user_provider.dart';
@@ -188,5 +189,58 @@ class AdminServices {
     } catch (e) {
       showSnackBar(context: context, message: e.toString());
     }
+  }
+
+  Future<Map<String, dynamic>> getEarnings(BuildContext context) async {
+    final userProvider = Provider.of<UserProvider>(context, listen: false);
+    List<Sales> sales = [];
+    int totalEarnings = 0;
+    try {
+      var response = await http.get(
+        Uri.parse("$uri/admin/analytics"),
+        headers: {
+          "Content-Type": "application/json; charset=UTF-8",
+          "x-auth-token": userProvider.user.token,
+        },
+      );
+      // ignore: use_build_context_synchronously
+      ErrorHandling(
+        response: response,
+        context: context,
+        onSuccess: () {
+          var res = jsonDecode(response.body);
+          print(res);
+          totalEarnings = res["totalEarnings"];
+          sales = [
+            Sales(
+              "Mobiles",
+              res["mobileEarnings"],
+            ),
+            Sales(
+              "Essentials",
+              res["essentialEarnings"],
+            ),
+            Sales(
+              "Appliances",
+              res["applianceEarnings"],
+            ),
+            Sales(
+              "Books",
+              res["bookEarnings"],
+            ),
+            Sales(
+              "Fashion",
+              res["fashionEarning"],
+            ),
+          ];
+        },
+      );
+    } catch (e) {
+      showSnackBar(context: context, message: e.toString());
+    }
+    return {
+      "sales": sales,
+      "totalEarnings": totalEarnings,
+    };
   }
 }

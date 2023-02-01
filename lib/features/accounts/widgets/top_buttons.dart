@@ -1,9 +1,8 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:amazon_clone/features/accounts/services/account_services.dart';
 import 'package:amazon_clone/features/accounts/widgets/account_button.dart';
-import 'package:amazon_clone/features/auth/screens/auth_screen.dart';
 import "package:flutter/material.dart";
-import 'package:shared_preferences/shared_preferences.dart';
 
 class TopButtons extends StatefulWidget {
   const TopButtons({super.key});
@@ -13,6 +12,7 @@ class TopButtons extends StatefulWidget {
 }
 
 class _TopButtonsState extends State<TopButtons> {
+  final accountServices = AccountServices();
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -37,12 +37,7 @@ class _TopButtonsState extends State<TopButtons> {
             AccountButton(
               text: "Log Out",
               onPress: () async {
-                SharedPreferences sp = await SharedPreferences.getInstance();
-                sp.clear();
-                Navigator.pushNamed(
-                  context,
-                  AuthScreen.routeName,
-                );
+                accountServices.logOut(context);
               },
             ),
             AccountButton(

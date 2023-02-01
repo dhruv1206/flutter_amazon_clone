@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:amazon_clone/features/admin/screens/analytics_screen.dart';
 import 'package:amazon_clone/features/admin/screens/order_screen.dart';
 import 'package:amazon_clone/features/admin/screens/posts_screen.dart';
 import "package:flutter/material.dart";
@@ -23,9 +24,7 @@ class _AdminScreenState extends State<AdminScreen> {
 
   List<Widget> pages = [
     const PostsScreen(),
-    const Center(
-      child: Text("Analytics Page"),
-    ),
+    const AnalyticsScreen(),
     const Center(
       child: OrderScreen(),
     ),
